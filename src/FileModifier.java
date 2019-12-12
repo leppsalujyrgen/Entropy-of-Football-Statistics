@@ -236,7 +236,7 @@ public class FileModifier {
             string.deleteCharAt(string.length() - 1);
             string.append("\n");
         }
-        return string.delete(string.length() - 2, string.length() - 1).toString();
+        return string.delete(string.length() - 1, string.length()).toString();
     }
 
     private static void mergeEveryTeamToOneRow(String filepath) throws IOException {
@@ -356,7 +356,7 @@ public class FileModifier {
                 String newGamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgames/";
                 createDuplicateFromFile(newPath + name, newGamePath, name);
                 mergeEveryTeamToOneRow(newGamePath + name);
-                addColumnToFile(newGamePath+name, createShotsOnTargetColumn(newGamePath + name));
+                addColumnToFile(newGamePath + name, createShotsOnTargetColumn(newGamePath + name));
             }
         }
     }
@@ -364,7 +364,7 @@ public class FileModifier {
     private static void addColumnToFile(String newGamePath, List<String> shotsOnTargetColumn) throws IOException {
         String[] lines = readFromFile(newGamePath).split("\n");
         for (int i = 0; i < lines.length; i++)
-            lines[i]+= "," + shotsOnTargetColumn.get(i);
+            lines[i] += "," + shotsOnTargetColumn.get(i);
         writeToFile(linesToText(lines), newGamePath);
     }
 
@@ -381,18 +381,18 @@ public class FileModifier {
 
             // Generating an unique key from fixture and was_home column. Key1 is used to get the team's shots from Map (clubsShots) in chronological order
             // (the team that came first in the file is the team whose shots are taken first from the map).
-            String key1 = values[columnIndexes.get("was_home")] + values[columnIndexes.get("fixture")];
-            System.out.println("Key1 = " + key1);
-            keys.add(key1);
-
-            // Generating an unique key from fixture and !was_home column. Key2 is the key to the opponent_team that had shots on target.
             try {
+                String key1 = Integer.parseInt(values[columnIndexes.get("was_home")]) + values[columnIndexes.get("fixture")];
+                //System.out.println("Key1 = " + key1);
+                keys.add(key1);
+
+                // Generating an unique key from fixture and !was_home column. Key2 is the key to the opponent_team that had shots on target.
                 String key2 = Math.abs(Integer.parseInt(values[columnIndexes.get("was_home")]) - 1) + values[columnIndexes.get("fixture")];
-                System.out.println("Key2 = " + key2 + "\n");
+                //System.out.println("Key2 = " + key2 + "\n");
                 String shotsOnTarget = values[columnIndexes.get("saves")];
                 clubsShots.put(key2, shotsOnTarget);
             } catch (NumberFormatException e) {
-                System.out.println(values[columnIndexes.get("was_home")]);
+                System.out.println("Header row : " + line);
             }
         }
 
