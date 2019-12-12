@@ -9,11 +9,11 @@ public class FileModifier {
         // Input: String filepath - File's path that is being read as a string.
         // Output: String lines - All the lines from given file.
 
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath), "windows-1252"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filepath), "windows-1252"))) {
             StringBuilder lines = new StringBuilder();
             String line;
 
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 lines.append(line);
                 lines.append("\n");
             }
@@ -29,7 +29,7 @@ public class FileModifier {
         //        String filename - name of the file, that gets written inside.
         // Output: Creates a new file (to path) and writes specified lines in it.
 
-        try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "windows-1252"))) {
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), "windows-1252"))) {
             bw.write(lines);
         }
 
@@ -46,7 +46,7 @@ public class FileModifier {
         // Output: Specified file (parameter filename) will be rewritten without unwanted columns.
 
         List<Integer> unwantedColumns = new ArrayList<>();
-        for(int col : cols) {
+        for (int col : cols) {
             unwantedColumns.add(col);
         }
 
@@ -55,15 +55,15 @@ public class FileModifier {
         String text = readFromFile(filename);
         String[] lines = text.split("\n");
 
-        for(int i = 0; i < lines.length; i++) {
+        for (int i = 0; i < lines.length; i++) {
 
             String[] columns = lines[i].split(",");
 
-            for(Integer unwantedColumn : unwantedColumns)
+            for (Integer unwantedColumn : unwantedColumns)
                 columns[unwantedColumn] = null;
 
             for (String column : columns)
-                if(column != null) {
+                if (column != null) {
                     newText.append(column);
                     newText.append(",");
                 }
@@ -99,17 +99,17 @@ public class FileModifier {
         String[] lines = text.split("\n");
         Set<String> nameArr = new HashSet<>();
 
-        for(int i = 0; i < lines.length; i++) {
+        for (int i = 0; i < lines.length; i++) {
             String name = lines[i].split(",")[0];
-            if(nameArr.contains(name))
+            if (nameArr.contains(name))
                 lines[i] = null;
             else
                 nameArr.add(name);
         }
 
         StringBuilder newText = new StringBuilder();
-        for(String line : lines) {
-            if(line != null) {
+        for (String line : lines) {
+            if (line != null) {
                 newText.append(line);
                 newText.append("\n");
             }
@@ -119,7 +119,7 @@ public class FileModifier {
 
     }
 
-    public static ArrayList<String> getColumn(String filename, int columnNumber) throws IOException {
+    public static ArrayList<String> getColumn(String filename, int columnNumber, boolean discardHeader) throws IOException {
         // Method processes a specified file and pairs one column, containing keys, to another, containing values.
         // Input: int keyColNumber - column that contains key values.
         //        int valueColNumber - column that contains value values.
@@ -131,10 +131,13 @@ public class FileModifier {
 
         String text = readFromFile(filename);
         String[] lines = text.split("\n");
-        for(String line : lines) {
+        for (String line : lines) {
             String columnValue = line.split(",")[columnNumber];
             columnValues.add(columnValue);
         }
+
+        if (discardHeader)
+            columnValues.remove(0);
 
         return columnValues;
 
@@ -145,7 +148,7 @@ public class FileModifier {
         // Input: String[] lines - array, that will be converted into a text (String)
         // Output: String - text from lines.
         StringBuilder text = new StringBuilder();
-        for(String line : lines) {
+        for (String line : lines) {
             text.append(line);
             text.append("\n");
         }
@@ -153,7 +156,7 @@ public class FileModifier {
 
     }
 
-    public static String doubleCheckName(String name, String[] allNames)  {
+    public static String doubleCheckName(String name, String[] allNames) {
         // Method checks if given name is in the list of all names, first by first name and then by last name.
         // Input: String name - the name that is being searched from list
         //        String[] allNames - list of names from where the given name is searched
@@ -161,14 +164,14 @@ public class FileModifier {
         ArrayList<String> candidateNames = new ArrayList<>();
 
         String[] names = name.split(",");
-        for(String playerName : allNames) {
-            if(playerName.contains(names[0])){
+        for (String playerName : allNames) {
+            if (playerName.contains(names[0])) {
                 candidateNames.add(playerName);
             }
         }
 
-        for(String playerName : candidateNames) {
-            if(playerName.contains(names[names.length - 1])){
+        for (String playerName : candidateNames) {
+            if (playerName.contains(names[names.length - 1])) {
                 return playerName;
             }
         }
@@ -187,25 +190,28 @@ public class FileModifier {
             if (!names.contains(name))
                 names.add(name);
 
-            lines[i] = (names.indexOf(name)+649) + "," + lines[i];
+            lines[i] = (names.indexOf(name) + 649) + "," + lines[i];
         }
 
         writeToFile(linesToText(lines), filename);
-        System.out.println(names.size());
+        //System.out.println(names.size());
     }
 
-    private static void removeColumnsFromFile(String filepath, int[] unnecessaryCols) throws IOException {
+    private static void removeColumnsFromFile(String filepath, Integer[] unnecessaryCols) throws IOException {
         String[] rows = rowsFromText(readFromFile(filepath));
         String[] purgedRows = new String[rows.length];
-        for (int i = 0; i < rows.length; i++)
+        for (int i = 0; i < rows.length; i++) {
             purgedRows[i] = purgeRow(rows[i], unnecessaryCols);
+            //System.out.println(purgedRows[i]);
+        }
 
         writeToFile(linesToText(purgedRows), filepath);
 
     }
 
-    private static String purgeRow(String row, int[] unnecessaryCols) {
-        ArrayList<String> values = new ArrayList<>(Arrays.asList(row.split(",")));
+    private static String purgeRow(String row, Integer[] unnecessaryCols) {
+        Arrays.sort(unnecessaryCols, Collections.reverseOrder());
+        ArrayList values = new ArrayList<>(Arrays.asList(row.split(",")));
         for (int column : unnecessaryCols)
             values.remove(column);
         return valuesToString(values);
@@ -216,7 +222,7 @@ public class FileModifier {
         StringBuilder string = new StringBuilder();
         for (Object value : values)
             string.append(value.toString()).append(",");
-        return string.deleteCharAt(string.length()-1).toString();
+        return string.deleteCharAt(string.length() - 1).toString();
     }
 
     private static String nameAndValuesToString(ArrayList<Integer[]> valuematrix, ArrayList<String> names) {
@@ -224,13 +230,13 @@ public class FileModifier {
         for (int i = 0; i < valuematrix.size(); i++) {
             string.append(names.get(i)).append(",");
             for (int j = 0; j < valuematrix.get(i).length; j++) {
-                if (j!=0)
+                if (j != 0)
                     string.append(valuematrix.get(i)[j]).append(",");
             }
-            string.deleteCharAt(string.length()-1);
+            string.deleteCharAt(string.length() - 1);
             string.append("\n");
         }
-        return string.delete(string.length()-2,string.length()-1).toString();
+        return string.delete(string.length() - 2, string.length() - 1).toString();
     }
 
     private static void mergeEveryTeamToOneRow(String filepath) throws IOException {
@@ -258,7 +264,7 @@ public class FileModifier {
                         for (int i = 0; i < rowvalues.length; i++) {
                             if (!columnNames[i].equals("name") && !columnNames[i].equals("element") && !columnNames[i].equals("fixture") &&
                                     !columnNames[i].equals("minutes") && !columnNames[i].equals("opponent_team") && !columnNames[i].equals("round") &&
-                                    !columnNames[i].equals("team_a_score") && !columnNames[i].equals("team_h_score"))
+                                    !columnNames[i].equals("team_a_score") && !columnNames[i].equals("team_h_score") && !columnNames[i].equals("was_home"))
                                 newRow[i] += Integer.parseInt(rowvalues[i]);
                         }
                         break;
@@ -266,19 +272,36 @@ public class FileModifier {
                 }
                 if (!hasteam) {
                     newRows.add(new Integer[columnNames.length]);
-                    newRows.get(newRows.size()-1)[0] = 0;
+                    newRows.get(newRows.size() - 1)[0] = 0;
                     names.add(rowvalues[0]);
                     for (int i = 1; i < columnNames.length; i++) {
-                        newRows.get(newRows.size()-1)[i] = Integer.parseInt(rowvalues[i]);
+                        try {
+                            newRows.get(newRows.size() - 1)[i] = Integer.parseInt(rowvalues[i]);
+                        } catch (NumberFormatException e) {
+                            if (rowvalues[i].equals("False"))
+                                newRows.get(newRows.size() - 1)[i] = 0;
+                            else if (rowvalues[i].equals("True"))
+                                newRows.get(newRows.size() - 1)[i] = 1;
+                            else
+                                throw e;
+                        }
                     }
                 }
-            }
-            else {
+            } else {
                 newRows.add(new Integer[columnNames.length]);
-                newRows.get(newRows.size()-1)[0] = 0;
+                newRows.get(newRows.size() - 1)[0] = 0;
                 names.add(rowvalues[0]);
                 for (int i = 1; i < columnNames.length; i++) {
-                    newRows.get(newRows.size()-1)[i] = Integer.parseInt(rowvalues[i]);
+                    try {
+                        newRows.get(newRows.size() - 1)[i] = Integer.parseInt(rowvalues[i]);
+                    } catch (NumberFormatException e) {
+                        if (rowvalues[i].equals("False"))
+                            newRows.get(newRows.size() - 1)[i] = 0;
+                        else if (rowvalues[i].equals("True"))
+                            newRows.get(newRows.size() - 1)[i] = 1;
+                        else
+                            throw e;
+                    }
                 }
             }
         }
@@ -292,17 +315,17 @@ public class FileModifier {
         for (int j = 6; j < 9; j++) {
             filepaths = new ArrayList<>();
             for (int i = 1; i < 39; i++)
-                filepaths.add("201" + j + "-1" + (j+1) + "/gws/gw" + i + ".csv");
+                filepaths.add("201" + j + "-1" + (j + 1) + "/gws/gw" + i + ".csv");
 
             // Convenience table that maps column name to column index.
             Map<String, Integer> columnIndexes = getColumnNamesToIndexesTable(filepaths.get(0));
 
             // Create duplicate files and erase the unneccessary columns from duplicates.
             for (String filepath : filepaths) {
-                String newPath = "Parsed_201" + j + "_1" + (j+1) + "/gws/";
+                String newPath = "Parsed_201" + j + "_1" + (j + 1) + "/gws/";
                 String name = filepath.split("/")[2];
                 createDuplicateFromFile(filepath, newPath, name);
-                removeColumnsFromFile(newPath+name, new int[]{
+                removeColumnsFromFile(newPath + name, new Integer[]{
                         columnIndexes.get("winning_goals"),
                         columnIndexes.get("value"),
                         columnIndexes.get("transfers_balance"),
@@ -322,6 +345,7 @@ public class FileModifier {
                         columnIndexes.get("goals_conceded"),
                         columnIndexes.get("errors_leading_to_goal"),
                         columnIndexes.get("id"),
+                        columnIndexes.get("element"),
                         columnIndexes.get("ea_index"),
                         columnIndexes.get("creativity"),
                         columnIndexes.get("clean_sheets"),
@@ -329,11 +353,56 @@ public class FileModifier {
                         columnIndexes.get("bonus"),
                         columnIndexes.get("assists")
                 });
-                String newGamePath = "Parsed_201" + j + "_1" + (j+1) + "/gwgames/";
-                createDuplicateFromFile(newPath+name, newGamePath, name);
-                mergeEveryTeamToOneRow(newGamePath+name);
+                String newGamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgames/";
+                createDuplicateFromFile(newPath + name, newGamePath, name);
+                mergeEveryTeamToOneRow(newGamePath + name);
+                addColumnToFile(newGamePath+name, createShotsOnTargetColumn(newGamePath + name));
             }
         }
+    }
+
+    private static void addColumnToFile(String newGamePath, List<String> shotsOnTargetColumn) throws IOException {
+        String[] lines = readFromFile(newGamePath).split("\n");
+        for (int i = 0; i < lines.length; i++)
+            lines[i]+= "," + shotsOnTargetColumn.get(i);
+        writeToFile(linesToText(lines), newGamePath);
+    }
+
+    private static List<String> createShotsOnTargetColumn(String filepath) throws IOException {
+        // Method creates a List shotsOnTarget, that should be interpreted as a column
+
+        Map<String, Integer> columnIndexes = getColumnNamesToIndexesTable(filepath);
+        // Create a map that stores club's shots and keys queue that keeps track which club came first in the file, which club came second etc;
+        Map<String, String> clubsShots = new HashMap<>();
+        Queue<String> keys = new LinkedList<>();
+
+        for (String line : readFromFile(filepath).split("\n")) {
+            String[] values = line.split(",");
+
+            // Generating an unique key from fixture and was_home column. Key1 is used to get the team's shots from Map (clubsShots) in chronological order
+            // (the team that came first in the file is the team whose shots are taken first from the map).
+            String key1 = values[columnIndexes.get("was_home")] + values[columnIndexes.get("fixture")];
+            System.out.println("Key1 = " + key1);
+            keys.add(key1);
+
+            // Generating an unique key from fixture and !was_home column. Key2 is the key to the opponent_team that had shots on target.
+            try {
+                String key2 = Math.abs(Integer.parseInt(values[columnIndexes.get("was_home")]) - 1) + values[columnIndexes.get("fixture")];
+                System.out.println("Key2 = " + key2 + "\n");
+                String shotsOnTarget = values[columnIndexes.get("saves")];
+                clubsShots.put(key2, shotsOnTarget);
+            } catch (NumberFormatException e) {
+                System.out.println(values[columnIndexes.get("was_home")]);
+            }
+        }
+
+        ArrayList<String> shotsOnTarget = new ArrayList<>();
+        shotsOnTarget.add("shots_on_target");
+        while (!keys.isEmpty()) {
+            shotsOnTarget.add(clubsShots.get(keys.poll()));
+        }
+
+        return shotsOnTarget;
     }
 
     private static Map<String, Integer> getColumnNamesToIndexesTable(String filepath) throws IOException {
