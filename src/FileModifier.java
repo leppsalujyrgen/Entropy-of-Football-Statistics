@@ -372,6 +372,7 @@ public class FileModifier {
         // Method creates a List shotsOnTarget, that should be interpreted as a column
 
         Map<String, Integer> columnIndexes = getColumnNamesToIndexesTable(filepath);
+
         // Create a map that stores club's shots and keys queue that keeps track which club came first in the file, which club came second etc;
         Map<String, String> clubsShots = new HashMap<>();
         Queue<String> keys = new LinkedList<>();
@@ -379,9 +380,9 @@ public class FileModifier {
         for (String line : readFromFile(filepath).split("\n")) {
             String[] values = line.split(",");
 
-            // Generating an unique key from fixture and was_home column. Key1 is used to get the team's shots from Map (clubsShots) in chronological order
-            // (the team that came first in the file is the team whose shots are taken first from the map).
             try {
+                // Generating an unique key from fixture and was_home column. Key1 is used to get the team's shots from Map (clubsShots) in chronological order
+                // (the team that came first in the file is the team whose shots are taken first from the map).
                 String key1 = Integer.parseInt(values[columnIndexes.get("was_home")]) + values[columnIndexes.get("fixture")];
                 //System.out.println("Key1 = " + key1);
                 keys.add(key1);
