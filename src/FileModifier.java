@@ -76,14 +76,18 @@ public class FileModifier {
 
     }
 
-    public static void createDuplicateFromFile(String existingFileName, String newFileName) throws IOException {
+    public static void createDuplicateFromFile(String existingFileName, String newFilePath, String newFileName) throws IOException {
         // Duplicates existing file.
         // Input: String existingFileName - File that is being duplicated.
         //        String newFileName - Filename of the duplicate that is being created.
         // Output: Method creates a new file, that is the copy of an existing file.
 
         String text = readFromFile(existingFileName);
-        writeToFile(text, newFileName);
+        File dirs = new File(newFilePath);
+        dirs.mkdirs();
+        File file = new File(newFilePath + newFileName);
+        file.createNewFile();
+        writeToFile(text, newFilePath + newFileName);
     }
 
     public static void eraseDuplicates(String filename) throws IOException {
@@ -150,6 +154,10 @@ public class FileModifier {
     }
 
     public static String doubleCheckName(String name, String[] allNames)  {
+        // Method checks if given name is in the list of all names, first by first name and then by last name.
+        // Input: String name - the name that is being searched from list
+        //        String[] allNames - list of names from where the given name is searched
+        // Output: String - if player was found, then returns the same name that was given, otherwise returns null
         ArrayList<String> candidateNames = new ArrayList<>();
 
         String[] names = name.split(",");
@@ -211,51 +219,121 @@ public class FileModifier {
         return string.deleteCharAt(string.length()-1).toString();
     }
 
+    private static String nameAndValuesToString(ArrayList<Integer[]> valuematrix, ArrayList<String> names) {
+        StringBuilder string = new StringBuilder();
+        for (int i = 0; i < valuematrix.size(); i++) {
+            string.append(names.get(i)).append(",");
+            for (int j = 0; j < valuematrix.get(i).length; j++) {
+                if (j!=0)
+                    string.append(valuematrix.get(i)[j]).append(",");
+            }
+            string.deleteCharAt(string.length()-1);
+            string.append("\n");
+        }
+        return string.delete(string.length()-2,string.length()-1).toString();
+    }
+
+    private static void mergeEveryTeamToOneRow(String filepath) throws IOException {
+        String[] rows = rowsFromText(readFromFile(filepath));
+        String[] columnNames = rows[0].split(",");
+        int opponentIndex = -1;
+        int fixtureId = -1;
+        for (int i = 0; i < columnNames.length; i++) {
+            if (columnNames[i].equals("opponent_team"))
+                opponentIndex = i;
+            else if (columnNames[i].equals("fixture"))
+                fixtureId = i;
+        }
+        ArrayList<Integer[]> newRows = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        for (int j = 1; j < rows.length; j++) {
+            String[] rowvalues = rows[j].split(",");
+            if (!newRows.isEmpty()) {
+                int opponent = Integer.parseInt(rowvalues[opponentIndex]);
+                int fixture = Integer.parseInt(rowvalues[fixtureId]);
+                boolean hasteam = false;
+                for (Integer[] newRow : newRows) {
+                    if (newRow[opponentIndex] == opponent && newRow[fixtureId] == fixture) {
+                        hasteam = true;
+                        for (int i = 0; i < rowvalues.length; i++) {
+                            if (!columnNames[i].equals("name") && !columnNames[i].equals("element") && !columnNames[i].equals("fixture") &&
+                                    !columnNames[i].equals("minutes") && !columnNames[i].equals("opponent_team") && !columnNames[i].equals("round") &&
+                                    !columnNames[i].equals("team_a_score") && !columnNames[i].equals("team_h_score"))
+                                newRow[i] += Integer.parseInt(rowvalues[i]);
+                        }
+                        break;
+                    }
+                }
+                if (!hasteam) {
+                    newRows.add(new Integer[columnNames.length]);
+                    newRows.get(newRows.size()-1)[0] = 0;
+                    names.add(rowvalues[0]);
+                    for (int i = 1; i < columnNames.length; i++) {
+                        newRows.get(newRows.size()-1)[i] = Integer.parseInt(rowvalues[i]);
+                    }
+                }
+            }
+            else {
+                newRows.add(new Integer[columnNames.length]);
+                newRows.get(newRows.size()-1)[0] = 0;
+                names.add(rowvalues[0]);
+                for (int i = 1; i < columnNames.length; i++) {
+                    newRows.get(newRows.size()-1)[i] = Integer.parseInt(rowvalues[i]);
+                }
+            }
+        }
+        writeToFile(rows[0] + "\n" + nameAndValuesToString(newRows, names), filepath);
+    }
+
     public static void main(String[] args) throws IOException {
 
-        // All paths to gw files from the season 2016/17
-        List<String> filepaths = new ArrayList<>();
-        for (int i = 1; i < 39; i++)
-            filepaths.add("2016-17/gws/gw" + i + ".csv");
+        // All paths to gw files
+        List<String> filepaths;
+        for (int j = 6; j < 9; j++) {
+            filepaths = new ArrayList<>();
+            for (int i = 1; i < 39; i++)
+                filepaths.add("201" + j + "-1" + (j+1) + "/gws/gw" + i + ".csv");
 
-        // Convenience table that maps column name to column index.
-        Map<String, Integer> columnIndexes = getColumnNamesToIndexesTable(filepaths.get(0));
+            // Convenience table that maps column name to column index.
+            Map<String, Integer> columnIndexes = getColumnNamesToIndexesTable(filepaths.get(0));
 
-        // Create duplicate files and erase the unneccessary columns from duplicates.
-        for (String filepath: filepaths) {
-            String newPath = "Parsed_2016_17/" + filepath.split("/")[2];
-            createDuplicateFromFile(filepath, newPath);
-            removeColumnsFromFile(newPath, new int[]{
-                    columnIndexes.get("winning_goals"),
-                    columnIndexes.get("value"),
-                    columnIndexes.get("transfers_balance"),
-                    columnIndexes.get("transfers_out"),
-                    columnIndexes.get("transfers_in"),
-                    columnIndexes.get("total_points"),
-                    columnIndexes.get("threat"),
-                    columnIndexes.get("selected"),
-                    columnIndexes.get("own_goals"),
-                    columnIndexes.get("loaned_out"),
-                    columnIndexes.get("loaned_in"),
-                    columnIndexes.get("kickoff_time_formatted"),
-                    columnIndexes.get("kickoff_time"),
-                    columnIndexes.get("influence"),
-                    columnIndexes.get("ict_index"),
-                    columnIndexes.get("goals_scored"),
-                    columnIndexes.get("goals_conceded"),
-                    columnIndexes.get("errors_leading_to_goal"),
-                    columnIndexes.get("element"),
-                    columnIndexes.get("ea_index"),
-                    columnIndexes.get("creativity"),
-                    columnIndexes.get("clean_sheets"),
-                    columnIndexes.get("bps"),
-                    columnIndexes.get("bonus"),
-                    columnIndexes.get("assists")
-            });
+            // Create duplicate files and erase the unneccessary columns from duplicates.
+            for (String filepath : filepaths) {
+                String newPath = "Parsed_201" + j + "_1" + (j+1) + "/gws/";
+                String name = filepath.split("/")[2];
+                createDuplicateFromFile(filepath, newPath, name);
+                removeColumnsFromFile(newPath+name, new int[]{
+                        columnIndexes.get("winning_goals"),
+                        columnIndexes.get("value"),
+                        columnIndexes.get("transfers_balance"),
+                        columnIndexes.get("transfers_out"),
+                        columnIndexes.get("transfers_in"),
+                        columnIndexes.get("total_points"),
+                        columnIndexes.get("threat"),
+                        columnIndexes.get("selected"),
+                        columnIndexes.get("own_goals"),
+                        columnIndexes.get("loaned_out"),
+                        columnIndexes.get("loaned_in"),
+                        columnIndexes.get("kickoff_time_formatted"),
+                        columnIndexes.get("kickoff_time"),
+                        columnIndexes.get("influence"),
+                        columnIndexes.get("ict_index"),
+                        columnIndexes.get("goals_scored"),
+                        columnIndexes.get("goals_conceded"),
+                        columnIndexes.get("errors_leading_to_goal"),
+                        columnIndexes.get("id"),
+                        columnIndexes.get("ea_index"),
+                        columnIndexes.get("creativity"),
+                        columnIndexes.get("clean_sheets"),
+                        columnIndexes.get("bps"),
+                        columnIndexes.get("bonus"),
+                        columnIndexes.get("assists")
+                });
+                String newGamePath = "Parsed_201" + j + "_1" + (j+1) + "/gwgames/";
+                createDuplicateFromFile(newPath+name, newGamePath, name);
+                mergeEveryTeamToOneRow(newGamePath+name);
+            }
         }
-
-
-
     }
 
     private static Map<String, Integer> getColumnNamesToIndexesTable(String filepath) throws IOException {
