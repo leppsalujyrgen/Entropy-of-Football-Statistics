@@ -265,6 +265,51 @@ public class FileModifier {
         writeToFile(String.join(",",columns) + "\n" + String.join("\n", rows), filepath);
     }
 
+    private static void replaceNamesWithTeams(String filepath, String teamsFilePath) throws IOException {
+        ArrayList<String> rows = new ArrayList<>(Arrays.asList(rowsFromText(readFromFile(filepath))));
+        ArrayList<String> teams = new ArrayList<>(Arrays.asList(rowsFromText(readFromFile(teamsFilePath))));
+        ArrayList<String> columns = new ArrayList<>(Arrays.asList(rows.get(0).split(",")));
+        int nameColumn = -1;
+        int fixtureColumn = -1;
+        int opponentColumn = -1;
+        for (int i = 0; i < columns.size(); i++) {
+            switch (columns.get(i)) {
+                case "name":
+                    nameColumn = i;
+                    break;
+                case "fixture":
+                    fixtureColumn = i;
+                    break;
+                case "opponent_team":
+                    opponentColumn = i;
+                    break;
+            }
+        }
+        for (int i = 1; i < rows.size(); i++) {
+            ArrayList<String> rowValues = new ArrayList<>(Arrays.asList(rows.get(i).split(",")));
+            int fixture = Integer.parseInt(rowValues.get(fixtureColumn));
+            int teamId = -1;
+            for (int j = 1; j < rows.size(); j++) {
+                ArrayList<String> opponentValues = new ArrayList<>(Arrays.asList(rows.get(j).split(",")));
+                if (Integer.parseInt(opponentValues.get(fixtureColumn)) == fixture && i != j) {
+                    teamId = Integer.parseInt(opponentValues.get(opponentColumn));
+                    break;
+                }
+            }
+            String teamName = "";
+            for (int j = 1; j < teams.size(); j++) {
+                ArrayList<String> team = new ArrayList<>(Arrays.asList(teams.get(j).split(",")));
+                if (Integer.parseInt(team.get(0)) == teamId)
+                    teamName = team.get(1);
+            }
+            rowValues.remove(0);
+            rowValues.add(0,teamName);
+            rows.add(i,String.join(",", rowValues));
+            rows.remove(i+1);
+        }
+        writeToFile(String.join("\n", rows), filepath);
+    }
+
     private static String purgeRow(String row, Integer[] unnecessaryCols) {
         Arrays.sort(unnecessaryCols, Collections.reverseOrder());
         ArrayList values = new ArrayList<>(Arrays.asList(row.split(",")));
@@ -397,6 +442,7 @@ public class FileModifier {
                 mergeEveryTeamToSingleRow(newGamePath + name);
                 addColumnToFile(newGamePath + name, createShotsOnTargetColumn(newGamePath + name));
                 removeOtherTeamScore(newGamePath + name);
+                replaceNamesWithTeams(newGamePath+name, "201" + j + "-1" + (j + 1) + "/teams.csv");
             }
         }
     }
