@@ -209,6 +209,62 @@ public class FileModifier {
 
     }
 
+    private static void modifyWasHome(String filepath) throws IOException {
+        String[] rows = rowsFromText(readFromFile(filepath));
+        int wasHomeIndex = -1;
+        String[] columns = rows[0].split(",");
+        for (int i = 0; i < columns.length; i++) {
+            if (columns[i].equals("was_home")) {
+                wasHomeIndex = i;
+                break;
+            }
+        }
+        for (int i = 0; i < rows.length; i++) {
+            String[] row = rows[i].split(",");
+            if (row[wasHomeIndex].equals("True"))
+                row[wasHomeIndex] = "1";
+            else if (row[wasHomeIndex].equals("False"))
+                row[wasHomeIndex] = "0";
+            rows[i] = String.join(",", row);
+        }
+        writeToFile(String.join("\n",rows),filepath);
+    }
+
+    private static void removeOtherTeamScore(String filepath) throws IOException {
+        ArrayList<String> rows = new ArrayList<>(Arrays.asList(rowsFromText(readFromFile(filepath))));
+        int wasHomeIndex = -1;
+        int homeScoreIndex = -1;
+        int awayScoreIndex = -1;
+        ArrayList<String> columns = new ArrayList<>(Arrays.asList(rows.get(0).split(",")));
+        for (int i = 0; i < columns.size(); i++) {
+            switch (columns.get(i)) {
+                case "team_a_score":
+                    awayScoreIndex = i;
+                    break;
+                case "team_h_score":
+                    homeScoreIndex = i;
+                    break;
+                case "was_home":
+                    wasHomeIndex = i;
+                    break;
+            }
+        }
+        for (int i = 1; i < rows.size(); i++) {
+            ArrayList<String> row = new ArrayList<>(Arrays.asList(rows.get(i).split(",")));
+            if (Integer.parseInt(row.get(wasHomeIndex)) == 1)
+                row.remove(awayScoreIndex);
+            else if (Integer.parseInt(row.get(wasHomeIndex)) == 0)
+                row.remove(homeScoreIndex);
+            rows.add(i,String.join(",", row));
+            rows.remove(i+1);
+        }
+        columns.remove("team_h_score");
+        columns.remove("team_a_score");
+        columns.add(Math.min(homeScoreIndex, awayScoreIndex),"team_score");
+        rows.remove(0);
+        writeToFile(String.join(",",columns) + "\n" + String.join("\n", rows), filepath);
+    }
+
     private static String purgeRow(String row, Integer[] unnecessaryCols) {
         Arrays.sort(unnecessaryCols, Collections.reverseOrder());
         ArrayList values = new ArrayList<>(Arrays.asList(row.split(",")));
@@ -239,7 +295,7 @@ public class FileModifier {
         return string.delete(string.length() - 1, string.length()).toString();
     }
 
-    private static void mergeEveryTeamToOneRow(String filepath) throws IOException {
+    private static void mergeEveryTeamToSingleRow(String filepath) throws IOException {
         String[] rows = rowsFromText(readFromFile(filepath));
         String[] columnNames = rows[0].split(",");
         int opponentIndex = -1;
@@ -264,7 +320,7 @@ public class FileModifier {
                         for (int i = 0; i < rowvalues.length; i++) {
                             if (!columnNames[i].equals("name") && !columnNames[i].equals("element") && !columnNames[i].equals("fixture") &&
                                     !columnNames[i].equals("minutes") && !columnNames[i].equals("opponent_team") && !columnNames[i].equals("round") &&
-                                    !columnNames[i].equals("team_a_score") && !columnNames[i].equals("team_h_score") && !columnNames[i].equals("was_home"))
+                                    !columnNames[i].equals("team_score") && !columnNames[i].equals("was_home"))
                                 newRow[i] += Integer.parseInt(rowvalues[i]);
                         }
                         break;
@@ -275,16 +331,7 @@ public class FileModifier {
                     newRows.get(newRows.size() - 1)[0] = 0;
                     names.add(rowvalues[0]);
                     for (int i = 1; i < columnNames.length; i++) {
-                        try {
-                            newRows.get(newRows.size() - 1)[i] = Integer.parseInt(rowvalues[i]);
-                        } catch (NumberFormatException e) {
-                            if (rowvalues[i].equals("False"))
-                                newRows.get(newRows.size() - 1)[i] = 0;
-                            else if (rowvalues[i].equals("True"))
-                                newRows.get(newRows.size() - 1)[i] = 1;
-                            else
-                                throw e;
-                        }
+                        newRows.get(newRows.size() - 1)[i] = Integer.parseInt(rowvalues[i]);
                     }
                 }
             } else {
@@ -292,16 +339,7 @@ public class FileModifier {
                 newRows.get(newRows.size() - 1)[0] = 0;
                 names.add(rowvalues[0]);
                 for (int i = 1; i < columnNames.length; i++) {
-                    try {
-                        newRows.get(newRows.size() - 1)[i] = Integer.parseInt(rowvalues[i]);
-                    } catch (NumberFormatException e) {
-                        if (rowvalues[i].equals("False"))
-                            newRows.get(newRows.size() - 1)[i] = 0;
-                        else if (rowvalues[i].equals("True"))
-                            newRows.get(newRows.size() - 1)[i] = 1;
-                        else
-                            throw e;
-                    }
+                    newRows.get(newRows.size() - 1)[i] = Integer.parseInt(rowvalues[i]);
                 }
             }
         }
@@ -353,9 +391,11 @@ public class FileModifier {
                         columnIndexes.get("bonus"),
                         columnIndexes.get("assists")
                 });
+                modifyWasHome(newPath + name);
+                removeOtherTeamScore(newPath + name);
                 String newGamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgames/";
                 createDuplicateFromFile(newPath + name, newGamePath, name);
-                mergeEveryTeamToOneRow(newGamePath + name);
+                mergeEveryTeamToSingleRow(newGamePath + name);
                 addColumnToFile(newGamePath + name, createShotsOnTargetColumn(newGamePath + name));
             }
         }
@@ -376,9 +416,9 @@ public class FileModifier {
         // Create a map that stores club's shots and keys queue that keeps track which club came first in the file, which club came second etc;
         Map<String, String> clubsShots = new HashMap<>();
         Queue<String> keys = new LinkedList<>();
-
-        for (String line : readFromFile(filepath).split("\n")) {
-            String[] values = line.split(",");
+        String[] lines = readFromFile(filepath).split("\n");
+        for (int i = 1; i < lines.length; i++) {
+            String[] values = lines[i].split(",");
 
             try {
                 // Generating an unique key from fixture and was_home column. Key1 is used to get the team's shots from Map (clubsShots) in chronological order
@@ -393,7 +433,7 @@ public class FileModifier {
                 String shotsOnTarget = values[columnIndexes.get("saves")];
                 clubsShots.put(key2, shotsOnTarget);
             } catch (NumberFormatException e) {
-                System.out.println("Header row : " + line);
+                System.out.println("Header row : " + lines[i]);
             }
         }
 
