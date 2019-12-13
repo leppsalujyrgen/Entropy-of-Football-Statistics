@@ -320,7 +320,7 @@ public class FileModifier {
                         for (int i = 0; i < rowvalues.length; i++) {
                             if (!columnNames[i].equals("name") && !columnNames[i].equals("element") && !columnNames[i].equals("fixture") &&
                                     !columnNames[i].equals("minutes") && !columnNames[i].equals("opponent_team") && !columnNames[i].equals("round") &&
-                                    !columnNames[i].equals("team_score") && !columnNames[i].equals("was_home"))
+                                    !columnNames[i].equals("team_score") && !columnNames[i].equals("was_home") && !columnNames[i].equals("team_a_score") && !columnNames[i].equals("team_h_score"))
                                 newRow[i] += Integer.parseInt(rowvalues[i]);
                         }
                         break;
@@ -392,11 +392,11 @@ public class FileModifier {
                         columnIndexes.get("assists")
                 });
                 modifyWasHome(newPath + name);
-                removeOtherTeamScore(newPath + name);
                 String newGamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgames/";
                 createDuplicateFromFile(newPath + name, newGamePath, name);
                 mergeEveryTeamToSingleRow(newGamePath + name);
                 addColumnToFile(newGamePath + name, createShotsOnTargetColumn(newGamePath + name));
+                removeOtherTeamScore(newGamePath + name);
             }
         }
     }
@@ -430,8 +430,13 @@ public class FileModifier {
                 // Generating an unique key from fixture and !was_home column. Key2 is the key to the opponent_team that had shots on target.
                 String key2 = Math.abs(Integer.parseInt(values[columnIndexes.get("was_home")]) - 1) + values[columnIndexes.get("fixture")];
                 //System.out.println("Key2 = " + key2 + "\n");
-                String shotsOnTarget = values[columnIndexes.get("saves")];
-                clubsShots.put(key2, shotsOnTarget);
+
+                Integer shotsOnTarget;
+                if (values[columnIndexes.get("was_home")].equals("1"))
+                    shotsOnTarget = Integer.parseInt(values[columnIndexes.get("team_a_score")]) + Integer.parseInt(values[columnIndexes.get("saves")]);
+                else
+                    shotsOnTarget = Integer.parseInt(values[columnIndexes.get("team_h_score")]) + Integer.parseInt(values[columnIndexes.get("saves")]);
+                clubsShots.put(key2, shotsOnTarget.toString());
             } catch (NumberFormatException e) {
                 System.out.println("Header row : " + lines[i]);
             }
