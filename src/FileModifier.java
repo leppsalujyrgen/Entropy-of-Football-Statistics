@@ -440,10 +440,11 @@ public class FileModifier {
 
             // Create duplicate files and erase the unneccessary columns from duplicates.
             for (String filepath : filepaths) {
+                String model = "Data Modelling/";
                 String newPath = "Parsed_201" + j + "_1" + (j + 1) + "/gws/";
                 String name = filepath.split("/")[2];
-                createDuplicateFromFile(filepath, newPath, name);
-                removeColumnsFromFile(newPath + name, new Integer[]{
+                createDuplicateFromFile(filepath, model+newPath, name);
+                removeColumnsFromFile(model+newPath + name, new Integer[]{
                         columnIndexes.get("winning_goals"),
                         columnIndexes.get("value"),
                         columnIndexes.get("transfers_balance"),
@@ -471,21 +472,18 @@ public class FileModifier {
                         columnIndexes.get("bonus"),
                         columnIndexes.get("assists")
                 });
-                modifyWasHome(newPath + name);
+                modifyWasHome(model+newPath + name);  //Changes true/false to 1/0 in was_home column.
                 String newGamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgames/";
-                createDuplicateFromFile(newPath + name, newGamePath, name);
-                mergeEveryTeamToSingleRow(newGamePath + name);
-                addColumnToFile(newGamePath + name, createShotsOnTargetColumn(newGamePath + name));
-                removeOtherTeamScore(newGamePath + name);
-                replaceNamesWithTeams(newGamePath+name, "201" + j + "-1" + (j + 1) + "/teams.csv");
+                createDuplicateFromFile(model+newPath + name, model+newGamePath, name);
+                mergeEveryTeamToSingleRow(model+newGamePath + name);  //Merges every team's players' meaningful stats into team stats row.
+                addColumnToFile(model+newGamePath + name, createShotsOnTargetColumn(model+newGamePath + name)); //Creates shots on target column.
+                removeOtherTeamScore(model+newGamePath + name);   //Removes other team's score from team row
+                replaceNamesWithTeams(model+newGamePath+name, "201" + j + "-1" + (j + 1) + "/teams.csv"); //Replaces the player name in the beginning with the player's team's name.
                 String gamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgamesStats/";
-                createDuplicateFromFile(newGamePath+name, gamePath, name);
-                mergeTeamsToGames(gamePath+name);
+                createDuplicateFromFile(model+newGamePath+name, model+gamePath, name);
+                mergeTeamsToGames(model+gamePath+name);   //Appends away teams' rows to home teams' rows for every match.
             }
-
-
         }
-
     }
 
     private static void addColumnToFile(String newGamePath, List<String> shotsOnTargetColumn) throws IOException {
