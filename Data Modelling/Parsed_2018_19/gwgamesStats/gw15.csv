@@ -1,0 +1,11 @@
+name_h,attempted_passes_h,big_chances_created_h,big_chances_missed_h,clearances_blocks_interceptions_h,completed_passes_h,dribbles_h,errors_leading_to_goal_attempt_h,fixture_h,fouls_h,key_passes_h,minutes_h,offside_h,open_play_crosses_h,opponent_team_h,penalties_conceded_h,penalties_missed_h,penalties_saved_h,recoveries_h,red_cards_h,round_h,saves_h,tackled_h,tackles_h,target_missed_h,team_score_h,yellow_cards_h,shots_on_target_h,name_a,attempted_passes_a,big_chances_created_a,big_chances_missed_a,clearances_blocks_interceptions_a,completed_passes_a,dribbles_a,errors_leading_to_goal_attempt_a,fouls_a,key_passes_a,offside_a,open_play_crosses_a,penalties_conceded_a,penalties_missed_a,penalties_saved_a,recoveries_a,red_cards_a,saves_a,tackled_a,tackles_a,target_missed_a,team_score_a,yellow_cards_a,shots_on_target_a
+West Ham United,463,1,1,28,356,9,0,147,10,14,0,2,2,5,1,0,1,57,0,15,3,13,5,3,3,1,11,Cardiff City,295,0,1,36,201,13,0,10,5,5,2,0,1,0,57,0,8,12,5,2,1,2,4
+Burnley,229,0,1,41,137,8,1,143,10,6,19,6,1,12,0,0,0,66,0,15,8,4,9,3,1,1,6,Liverpool,680,2,0,22,581,6,0,3,14,3,1,0,0,0,57,0,5,13,3,2,3,0,11
+Watford,306,2,2,46,203,7,1,146,4,8,90,4,2,13,0,0,0,51,0,15,5,16,13,2,1,0,6,Manchester City,712,4,3,37,627,8,0,8,11,7,3,0,0,0,65,0,5,19,8,5,2,1,7
+Fulham,314,1,1,31,209,7,0,144,12,21,90,2,2,11,0,0,0,59,0,15,4,14,4,10,1,0,7,Leicester City,382,1,1,45,257,4,0,7,11,2,2,0,0,0,55,0,6,7,3,6,1,0,5
+Wolves,281,1,0,49,204,7,0,148,18,3,0,2,1,6,0,0,0,57,0,15,2,13,9,3,2,4,2,Chelsea,678,3,3,32,596,11,0,10,14,0,2,0,0,0,60,0,0,14,7,10,1,4,3
+AFC Bournemouth,304,2,0,77,218,5,1,141,14,6,0,3,2,10,0,0,0,68,0,15,5,25,4,4,2,4,2,Huddersfield Town,608,1,1,16,499,4,0,11,16,0,8,0,0,0,63,0,0,15,4,10,1,2,6
+Everton,647,2,2,13,540,12,0,149,7,12,77,0,8,15,0,0,0,58,0,15,4,23,7,8,1,0,3,Newcastle United,205,2,1,86,129,3,0,18,8,2,5,0,0,0,52,0,2,13,5,3,1,5,5
+Manchester United,446,1,0,40,353,7,1,145,13,7,0,2,2,1,0,0,0,52,0,15,3,12,4,0,2,3,7,Arsenal,545,3,2,31,446,8,0,10,7,3,3,0,0,0,58,0,5,15,5,2,2,3,5
+Tottenham,527,2,0,40,435,3,1,150,7,9,0,4,4,16,0,0,0,53,0,15,4,15,5,3,3,0,8,Southampton,473,1,1,33,381,6,0,5,14,2,5,0,0,0,55,0,5,9,8,9,1,0,5
+Brighton,269,0,0,54,190,6,0,142,14,5,0,0,2,7,1,0,0,54,1,15,3,17,7,3,3,2,3,Crystal Palace,594,0,0,20,502,8,0,12,15,0,5,1,0,0,50,0,0,30,8,8,1,3,4

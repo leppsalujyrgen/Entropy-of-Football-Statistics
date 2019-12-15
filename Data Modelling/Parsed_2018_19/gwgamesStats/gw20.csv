@@ -1,0 +1,11 @@
+name_h,attempted_passes_h,big_chances_created_h,big_chances_missed_h,clearances_blocks_interceptions_h,completed_passes_h,dribbles_h,errors_leading_to_goal_attempt_h,fixture_h,fouls_h,key_passes_h,minutes_h,offside_h,open_play_crosses_h,opponent_team_h,penalties_conceded_h,penalties_missed_h,penalties_saved_h,recoveries_h,red_cards_h,round_h,saves_h,tackled_h,tackles_h,target_missed_h,team_score_h,yellow_cards_h,shots_on_target_h,name_a,attempted_passes_a,big_chances_created_a,big_chances_missed_a,clearances_blocks_interceptions_a,completed_passes_a,dribbles_a,errors_leading_to_goal_attempt_a,fouls_a,key_passes_a,offside_a,open_play_crosses_a,penalties_conceded_a,penalties_missed_a,penalties_saved_a,recoveries_a,red_cards_a,saves_a,tackled_a,tackles_a,target_missed_a,team_score_a,yellow_cards_a,shots_on_target_a
+Burnley,337,5,4,50,247,5,0,192,15,14,0,4,7,19,0,0,0,60,0,20,4,15,8,9,2,1,5,West Ham United,453,1,1,23,340,9,0,11,7,1,0,0,0,0,54,0,3,21,2,2,0,4,4
+Crystal Palace,394,0,0,45,306,7,0,193,11,4,90,3,2,6,0,0,0,66,0,20,3,12,4,2,0,0,0,Chelsea,780,1,0,35,690,7,0,8,9,3,1,0,0,0,71,0,0,14,2,4,1,1,4
+Watford,569,2,1,37,485,15,0,200,17,7,36,1,1,15,0,0,0,61,0,20,1,20,3,2,1,1,5,Newcastle United,322,1,0,58,231,7,0,16,8,4,2,0,0,0,70,0,4,6,17,4,1,2,2
+Fulham,393,1,2,41,293,5,0,194,12,13,45,3,4,10,0,1,0,59,0,20,5,8,8,7,1,3,5,Huddersfield Town,526,0,0,33,415,3,0,10,5,2,3,1,0,1,57,0,4,9,4,1,0,1,5
+Liverpool,510,2,1,27,424,14,2,196,8,9,12,2,2,1,0,0,0,65,0,20,1,17,9,3,5,1,10,Arsenal,551,1,0,28,464,8,0,13,7,5,1,2,0,0,69,0,5,17,7,3,1,2,2
+Leicester City,448,1,2,40,341,7,2,195,14,11,0,0,1,5,0,1,0,52,0,20,2,13,4,3,0,0,7,Cardiff City,274,0,0,56,185,4,0,16,6,1,3,1,0,1,58,0,7,19,7,3,1,2,3
+Manchester United,683,5,2,29,619,8,0,197,10,10,0,6,2,2,0,0,0,50,1,20,2,8,8,0,4,2,8,AFC Bournemouth,358,1,0,25,286,6,0,7,6,0,1,0,0,0,47,0,4,12,5,2,1,0,3
+Southampton,235,1,1,50,157,4,1,198,11,4,90,0,1,13,0,0,0,49,1,20,4,12,11,1,1,2,4,Manchester City,783,6,4,26,698,14,0,10,13,2,2,0,0,0,54,0,3,26,8,4,3,3,7
+Tottenham,665,0,0,25,587,7,0,199,7,8,0,0,1,20,0,0,0,62,0,20,1,19,4,4,1,3,3,Wolves,416,2,0,27,330,16,0,7,10,4,4,0,0,0,71,0,2,18,7,4,3,2,4
+Brighton,349,1,1,47,245,5,1,191,10,5,0,2,4,8,0,0,0,61,0,20,4,17,4,3,1,0,3,Everton,426,0,0,32,312,8,1,11,8,1,5,0,0,0,59,0,2,23,1,6,0,2,4

@@ -1,0 +1,11 @@
+name_h,attempted_passes_h,big_chances_created_h,big_chances_missed_h,clearances_blocks_interceptions_h,completed_passes_h,dribbles_h,errors_leading_to_goal_attempt_h,fixture_h,fouls_h,key_passes_h,minutes_h,offside_h,open_play_crosses_h,opponent_team_h,penalties_conceded_h,penalties_missed_h,penalties_saved_h,recoveries_h,red_cards_h,round_h,saves_h,tackled_h,tackles_h,target_missed_h,team_score_h,yellow_cards_h,shots_on_target_h,name_a,attempted_passes_a,big_chances_created_a,big_chances_missed_a,clearances_blocks_interceptions_a,completed_passes_a,dribbles_a,errors_leading_to_goal_attempt_a,fouls_a,key_passes_a,offside_a,open_play_crosses_a,penalties_conceded_a,penalties_missed_a,penalties_saved_a,recoveries_a,red_cards_a,saves_a,tackled_a,tackles_a,target_missed_a,team_score_a,yellow_cards_a,shots_on_target_a
+West Ham United,432,1,1,38,350,10,0,160,10,7,0,2,2,7,0,0,0,77,0,16,2,20,10,5,3,1,6,Crystal Palace,472,1,0,30,376,10,0,8,6,0,3,0,0,0,74,0,3,22,16,2,2,2,4
+Burnley,309,1,1,29,199,2,1,153,11,9,18,2,4,3,0,0,0,48,0,16,1,12,4,4,1,2,4,Brighton,513,2,2,37,387,9,0,11,12,1,4,0,0,0,55,0,3,11,4,12,0,0,1
+Arsenal,524,4,3,27,424,3,0,151,13,13,0,2,1,10,0,0,0,72,0,16,0,16,5,8,1,5,3,Huddersfield Town,322,0,0,41,216,3,0,20,5,0,3,0,0,0,60,0,2,17,6,5,0,4,0
+AFC Bournemouth,424,0,0,37,327,6,0,152,9,2,0,3,2,12,0,0,0,51,0,16,1,12,7,3,0,2,2,Liverpool,634,0,0,29,532,13,0,11,6,2,1,0,0,0,54,0,2,14,4,4,4,1,5
+Everton,414,1,1,38,322,5,0,156,13,8,24,4,9,18,0,1,0,65,0,16,2,24,3,5,2,1,5,Watford,324,1,1,42,223,11,0,13,8,4,2,1,0,1,73,0,3,24,8,7,2,1,4
+Leicester City,410,1,1,32,326,12,1,157,12,7,0,3,1,17,0,0,0,67,0,16,0,23,8,5,0,3,3,Tottenham,575,1,0,48,465,11,1,7,5,1,3,0,0,0,73,0,3,21,8,4,2,1,2
+Manchester United,625,5,4,38,541,10,2,158,11,13,0,4,4,9,1,0,0,67,0,16,3,18,1,6,4,1,11,Fulham,377,0,0,35,287,11,1,15,7,3,0,0,0,0,62,1,7,14,5,4,1,1,4
+Cardiff City,252,1,1,44,151,10,0,154,9,10,0,4,3,16,0,0,0,67,0,16,1,17,5,8,1,2,4,Southampton,441,0,0,49,329,4,0,10,8,0,4,0,0,0,55,0,3,13,7,6,0,2,1
+Chelsea,411,1,1,53,337,10,1,155,12,7,0,1,2,13,0,0,0,51,0,16,4,19,6,1,2,2,5,Manchester City,642,0,0,19,565,19,0,11,9,2,1,0,0,0,53,0,3,26,13,6,0,0,4
+Newcastle United,425,0,0,34,336,8,1,159,10,8,90,0,8,20,0,0,0,65,1,16,4,13,10,4,1,2,4,Wolves,424,1,0,42,340,4,1,17,8,2,3,0,0,0,71,0,3,13,6,5,2,5,6

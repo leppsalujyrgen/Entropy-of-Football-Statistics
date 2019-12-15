@@ -1,0 +1,11 @@
+name_h,attempted_passes_h,big_chances_created_h,big_chances_missed_h,clearances_blocks_interceptions_h,completed_passes_h,dribbles_h,errors_leading_to_goal_attempt_h,fixture_h,fouls_h,key_passes_h,minutes_h,offside_h,open_play_crosses_h,opponent_team_h,penalties_conceded_h,penalties_missed_h,penalties_saved_h,recoveries_h,red_cards_h,round_h,saves_h,tackled_h,tackles_h,target_missed_h,team_score_h,yellow_cards_h,shots_on_target_h,name_a,attempted_passes_a,big_chances_created_a,big_chances_missed_a,clearances_blocks_interceptions_a,completed_passes_a,dribbles_a,errors_leading_to_goal_attempt_a,fouls_a,key_passes_a,offside_a,open_play_crosses_a,penalties_conceded_a,penalties_missed_a,penalties_saved_a,recoveries_a,red_cards_a,saves_a,tackled_a,tackles_a,target_missed_a,team_score_a,yellow_cards_a,shots_on_target_a
+Burnley,395,3,2,39,285,5,1,282,9,15,90,4,5,7,0,0,0,61,0,29,3,10,6,3,2,1,8,Everton,340,4,3,68,227,10,0,12,9,1,3,0,0,0,78,1,6,15,10,6,1,1,4
+Crystal Palace,279,1,0,65,186,13,0,283,10,8,90,2,3,12,0,0,0,71,0,29,4,9,7,5,2,1,4,Manchester United,654,2,1,35,554,18,0,8,11,2,1,0,0,0,69,0,2,20,4,3,3,3,7
+Watford,408,2,1,36,290,12,0,290,11,11,90,3,2,19,0,0,0,70,0,29,2,17,6,6,1,2,3,West Bromwich Albion,353,2,2,58,230,6,0,12,6,1,5,0,0,0,60,0,2,10,11,5,0,0,2
+Liverpool,777,2,0,22,660,4,0,285,7,11,16,4,4,13,0,0,0,71,0,29,2,11,14,3,2,0,3,Newcastle United,315,0,0,35,210,21,0,9,5,1,2,0,0,0,66,0,1,24,5,2,0,0,2
+Leicester City,436,2,3,32,294,7,1,284,11,14,58,3,6,2,1,0,0,68,0,29,2,11,11,8,1,2,4,AFC Bournemouth,363,1,1,65,240,8,1,7,6,1,6,0,0,0,66,0,3,22,5,5,1,1,3
+Manchester City,975,1,0,19,902,20,0,286,8,13,0,2,4,5,0,0,0,66,0,29,0,11,6,5,1,2,2,Chelsea,392,0,0,33,303,9,1,9,3,1,0,0,0,0,59,0,1,10,6,3,0,1,0
+Southampton,423,1,1,18,329,15,0,287,8,14,90,2,7,15,0,0,0,59,0,29,3,13,7,5,0,0,6,Stoke City,240,0,0,67,161,8,0,13,11,2,1,0,0,0,53,0,6,18,7,9,0,1,3
+Swansea City,435,2,1,39,330,10,0,288,9,7,90,0,0,20,0,0,0,69,0,29,1,19,5,1,4,0,7,West Ham United,519,0,0,37,419,6,0,14,3,5,1,1,0,0,72,0,3,16,8,1,1,3,2
+Tottenham,808,3,1,35,705,20,0,289,6,14,0,4,5,8,0,0,0,80,0,29,3,28,8,3,2,1,7,Huddersfield Town,267,0,0,53,169,7,0,8,2,2,1,0,0,0,79,0,5,11,13,0,0,1,3
+Brighton,290,2,0,56,209,8,0,281,13,11,76,6,2,1,0,0,0,71,0,29,6,10,5,5,2,3,6,Arsenal,616,0,0,27,514,15,1,12,12,0,5,0,0,0,58,0,4,20,6,2,1,3,7

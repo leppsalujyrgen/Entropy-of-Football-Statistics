@@ -391,6 +391,41 @@ public class FileModifier {
         writeToFile(rows[0] + "\n" + nameAndValuesToString(newRows, names), filepath);
     }
 
+    private static void mergeTeamsToGames(String filepath) throws IOException {
+        ArrayList<String> rows = new ArrayList<>(Arrays.asList(rowsFromText(readFromFile(filepath))));
+        ArrayList<String> columns = new ArrayList<>(Arrays.asList(rows.get(0).split(",")));
+        ArrayList<String> newRows = new ArrayList<>();
+        int columnslength = columns.size();
+
+        for (int i = 0; i < columnslength; i++) {
+            columns.add(columns.get(i) + "_a");
+            columns.add(i, columns.get(i) + "_h");
+            columns.remove(i+1);
+        }
+        newRows.add(String.join(",",columns));
+        for (int i = 1; i < rows.size(); i++) {
+            ArrayList<String> rowHome = new ArrayList<>(Arrays.asList(rows.get(i).split(",")));
+            if (Integer.parseInt(rowHome.get(columns.indexOf("was_home_h"))) == 1) {
+                for (int j = 1; j < rows.size(); j++) {
+                    ArrayList<String> rowAway = new ArrayList<>(Arrays.asList(rows.get(j).split(",")));
+                    if (rowHome.get(columns.indexOf("fixture_h")).equals(rowAway.get(columns.indexOf("fixture_h"))) && Integer.parseInt(rowAway.get(columns.indexOf("was_home_h"))) == 0) {
+                        rowHome.addAll(rowAway);
+                    }
+                }
+                newRows.add(String.join(",",rowHome));
+            }
+        }
+        writeToFile(String.join("\n", newRows), filepath);
+        removeColumnsFromFile(filepath, new Integer[]{
+                columns.indexOf("was_home_a"),
+                columns.indexOf("round_a"),
+                columns.indexOf("opponent_team_a"),
+                columns.indexOf("minutes_a"),
+                columns.indexOf("fixture_a"),
+                columns.indexOf("was_home_h")
+        });
+    }
+
     public static void main(String[] args) throws IOException {
 
         // All paths to gw files
@@ -443,8 +478,14 @@ public class FileModifier {
                 addColumnToFile(newGamePath + name, createShotsOnTargetColumn(newGamePath + name));
                 removeOtherTeamScore(newGamePath + name);
                 replaceNamesWithTeams(newGamePath+name, "201" + j + "-1" + (j + 1) + "/teams.csv");
+                String gamePath = "Parsed_201" + j + "_1" + (j + 1) + "/gwgamesStats/";
+                createDuplicateFromFile(newGamePath+name, gamePath, name);
+                mergeTeamsToGames(gamePath+name);
             }
+
+
         }
+
     }
 
     private static void addColumnToFile(String newGamePath, List<String> shotsOnTargetColumn) throws IOException {

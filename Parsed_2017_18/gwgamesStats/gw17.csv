@@ -1,0 +1,11 @@
+name_h,attempted_passes_h,big_chances_created_h,big_chances_missed_h,clearances_blocks_interceptions_h,completed_passes_h,dribbles_h,errors_leading_to_goal_attempt_h,fixture_h,fouls_h,key_passes_h,minutes_h,offside_h,open_play_crosses_h,opponent_team_h,penalties_conceded_h,penalties_missed_h,penalties_saved_h,recoveries_h,red_cards_h,round_h,saves_h,tackled_h,tackles_h,target_missed_h,team_score_h,yellow_cards_h,shots_on_target_h,name_a,attempted_passes_a,big_chances_created_a,big_chances_missed_a,clearances_blocks_interceptions_a,completed_passes_a,dribbles_a,errors_leading_to_goal_attempt_a,fouls_a,key_passes_a,offside_a,open_play_crosses_a,penalties_conceded_a,penalties_missed_a,penalties_saved_a,recoveries_a,red_cards_a,saves_a,tackled_a,tackles_a,target_missed_a,team_score_a,yellow_cards_a,shots_on_target_a
+West Ham United,302,0,0,64,216,15,0,170,9,6,90,4,2,1,0,0,0,71,0,17,3,17,4,4,0,2,0,Arsenal,700,0,0,43,604,16,0,9,14,0,4,0,0,0,68,0,0,11,7,8,0,0,3
+Huddersfield Town,433,1,1,32,366,9,2,163,11,4,90,2,1,5,0,0,0,41,0,17,2,10,3,4,1,0,3,Chelsea,769,3,1,23,706,13,0,4,10,10,4,0,0,0,52,0,2,7,3,4,3,0,5
+Liverpool,715,1,4,35,611,16,0,166,16,7,0,1,2,19,0,0,0,63,0,17,1,25,6,3,0,1,3,West Bromwich Albion,286,0,0,57,193,6,1,6,5,4,3,0,0,0,77,0,3,19,8,4,0,1,1
+Burnley,393,0,0,49,251,2,0,161,6,6,0,4,5,15,0,0,0,68,0,17,7,17,5,5,1,0,2,Stoke City,377,0,1,47,240,6,0,14,10,2,2,0,0,0,67,0,1,14,12,6,0,0,7
+Newcastle United,506,0,0,17,391,11,0,167,10,8,0,2,3,7,0,0,0,63,1,17,3,25,7,4,0,1,4,Everton,427,1,1,71,313,4,1,11,6,3,3,0,0,0,75,0,4,17,12,3,1,2,4
+Southampton,416,0,1,33,336,9,0,168,13,8,0,3,1,9,0,0,0,59,0,17,5,21,12,5,1,1,4,Leicester City,369,2,0,31,280,8,0,9,10,1,2,0,0,0,50,0,3,18,10,2,4,0,9
+Swansea City,222,0,0,36,148,14,1,165,12,4,90,2,3,11,0,0,0,43,0,17,6,16,7,2,0,0,3,Manchester City,832,5,3,19,759,19,0,6,16,1,6,0,0,0,57,0,3,12,12,10,4,0,10
+Tottenham,752,1,1,9,665,10,0,169,5,19,0,3,2,3,0,0,0,53,0,17,4,13,6,6,2,1,7,Brighton,244,0,0,68,161,5,0,10,6,1,2,0,0,0,55,0,5,15,5,2,0,1,4
+Manchester United,567,0,1,35,480,8,1,164,14,6,19,2,1,2,0,0,0,69,0,17,7,9,9,3,1,1,2,AFC Bournemouth,426,0,0,31,342,7,0,12,11,0,4,0,0,0,68,0,1,13,4,4,0,2,7
+Crystal Palace,414,0,1,57,320,9,1,162,14,6,66,3,1,18,0,0,0,69,0,17,1,19,7,6,2,2,4,Watford,352,2,2,47,244,4,0,18,5,0,4,0,0,0,70,1,2,13,3,3,1,1,2
