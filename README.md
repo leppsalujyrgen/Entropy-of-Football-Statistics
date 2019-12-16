@@ -10,7 +10,6 @@ Getting the results:\
 Step one: Duplicating and modifying data files by running FileModifier.java\
 Step two: Learning different classification and regression models in statistics-classifiers.ipynb and statistics-regression.ipynb
 to get the initial idea of which model might be the best.\
-Step three: Exploring correlations and impact between statistics.\
-Step four: Applying found correlations and weight to statistics to get a model with better prediction rate.
+Step three: Exploring correlations and impact between statistics.
 
 https://towardsdatascience.com/what-ive-learnt-predicting-soccer-matches-with-machine-learning-b3f8b445149d
