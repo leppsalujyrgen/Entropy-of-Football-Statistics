@@ -11,4 +11,4 @@ Step one: Duplicating and modifying data files by running FileModifier.java\
 Step two: Learning different classification and regression models in statistics-classifiers.ipynb and statistics-regression.ipynb\
 Step three: Exploring correlations and impact between statistics in statistics-patterns.ipynb
 
-https://towardsdatascience.com/what-ive-learnt-predicting-soccer-matches-with-machine-learning-b3f8b445149d
+An interesting read: https://towardsdatascience.com/what-ive-learnt-predicting-soccer-matches-with-machine-learning-b3f8b445149d
