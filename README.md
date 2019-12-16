@@ -8,8 +8,7 @@ statistics through which we can hopefully learn a model that has a meaningful ra
 
 Getting the results:\
 Step one: Duplicating and modifying data files by running FileModifier.java\
-Step two: Learning different classification and regression models in statistics-classifiers.ipynb and statistics-regression.ipynb
-to get the initial idea of which model might be the best.\
-Step three: Exploring correlations and impact between statistics.
+Step two: Learning different classification and regression models in statistics-classifiers.ipynb and statistics-regression.ipynb\
+Step three: Exploring correlations and impact between statistics in statistics-patterns.ipynb
 
 https://towardsdatascience.com/what-ive-learnt-predicting-soccer-matches-with-machine-learning-b3f8b445149d
